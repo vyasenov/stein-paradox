@@ -13,8 +13,8 @@ sigma <- 1
 mu <- rnorm(p, mean = 5, sd = 2)  # True means
 
 # results storage
-risk_mle <- numeric(n)  
-risk_js <- numeric(n)
+mse_mle <- numeric(n)  
+mse_js <- numeric(n)
 
 ##############
 ############## SIMULATIONS
@@ -26,17 +26,17 @@ for (sim in 1:n) {
 
   # MLE estimator
   mle <- X
-  risk_mle[sim] <- sum((mle - mu)^2)
+  mse_mle[sim] <- sum((mle - mu)^2)
 
   # James-Stein estimator
   shrinkage <- max(0, 1 - ((p - 2) * sigma^2) / sum(X^2))
   js <- shrinkage * X
-  risk_js[sim] <- sum((js - mu)^2)
+  mse_js[sim] <- sum((js - mu)^2)
 }
 
 ##############
 ############## PRINT RESULTS
 ##############
 
-cat("Average Risk of MLE:", mean(risk_mle), "\n")
-cat("Average Risk of James-Stein:", mean(risk_js), "\n")
+cat("Average mse of MLE:", mean(mse_mle), "\n")
+cat("Average mse of James-Stein:", mean(mse_js), "\n")
